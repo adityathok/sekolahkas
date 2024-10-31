@@ -26,13 +26,10 @@
     const message = '';
 
     async function handleFormSubmit() {
-        console.log(form);
-        
+
         try {
             await login(form)
         } catch (error) {
-            const err = useSanctumError(error)
-
             console.log(error);
         }
     }
