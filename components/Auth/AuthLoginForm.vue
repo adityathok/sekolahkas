@@ -12,9 +12,10 @@
             <Button type="submit" label="Masuk" class="w-full"/>
         </div>
     </form>
+
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
     const { login } = useSanctumAuth()
 
     const form = reactive({
@@ -23,10 +24,7 @@
         remember: false,
     })
 
-    const message = '';
-
     async function handleFormSubmit() {
-
         try {
             await login(form)
         } catch (error) {

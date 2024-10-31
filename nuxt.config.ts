@@ -37,11 +37,15 @@ export default defineNuxtConfig({
     'nuxt-auth-sanctum'
   ], 
   sanctum: {
-      baseUrl: 'http://localhost:8000',
+      baseUrl: process.env.BACKEND_URL,
       redirect: {
         onLogin: '/',
-        onLogout: '/'
-      }
+        onLogout: '/',
+        onAuthOnly: '/',
+      },
+      globalMiddleware: {
+          enabled: true,
+      },
   },
   primevue: {
       options: {

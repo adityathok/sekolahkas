@@ -1,22 +1,28 @@
 <template>
     
-    <div class="relative flex justify-center items-center h-screen w-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
+    <div class="relative flex justify-center items-center h-screen w-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-blue-700 via-blue-800 to-gray-900">
       
-      <div class="text-white backdrop-blur-sm bg-white/30 rounded shadow-xl p-10 m-3 w-full md:w-[450px]">
-          
-          <div class="text-center mb-5 pb-3 border-b">
-            <h1 class="text-xl font-bold">
-              Selamat Datang
-            </h1>
-          </div>
+      <div class="text-slate-900 bg-white shadow-xl p-10 m-3 w-full md:w-[450px]">                   
 
           <template v-if="!isAuthenticated">
+            <div class="mb-5 pb-3 border-b">
+              <h1 class="text-3xl font-bold">
+                Login
+              </h1>
+            </div>
             <AuthLoginForm />
           </template>
-
           
           <template v-if="isAuthenticated">
-              <Button @click="logout" label="logout" class="w-full" />
+            <div class="mb-5 pb-3 border-b">
+              <h1 class="text-xl text-center font-bold">
+                Anda sudah masuk
+              </h1>
+            </div>
+            <div class="flex justify-between">
+              <Button @click="navigateTo('/dashboard')" label="Dashboard" class="w-full md:w-[48%] md:mb-0 mb-2" outlined/>
+              <Button @click="logout" label="Logout" class="w-full md:w-[48%]" />
+            </div>
           </template>
 
       </div>
