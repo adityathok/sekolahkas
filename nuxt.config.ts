@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Nora from '@primevue/themes/nora';
+import Lara from '@primevue/themes/lara';
 import { definePreset } from '@primevue/themes';
 
-const MyPreset = definePreset(Nora, {
+const MyPreset = definePreset(Lara, {
   semantic: {
       primary: {
           50: '{blue.50}',
@@ -32,10 +32,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [    
-    '@primevue/nuxt-module',
-    'nuxt-auth-sanctum'
-  ], 
+  modules: ['@primevue/nuxt-module', 'nuxt-auth-sanctum', '@nuxt/icon'], 
   sanctum: {
       baseUrl: process.env.BACKEND_URL,
       redirect: {

@@ -1,21 +1,53 @@
 <template>
 
-    <div class="relative h-svh md-w-[16rem] bg-zinc-300">
+    <div class="md:hidden absolute top-0 left-0 pt-4 px-5">
+        <Button size="small" variant="link" @click="toggleSidebar">
+            <Icon name="bi:list" />
+        </Button>
+    </div>
+
+    <div class="fixed md:relative md:start-0 z-20 top-0 py-3 px-2 h-svh w-[90%] md:w-[16rem] md:bg-zinc-100 shadow md:shadow-none bg-white transition ease-in duration-300" :class="{'start-0': isOpenSidebar, 'start-[-100%]': !isOpenSidebar}">
+
+        <PanelMenu
+            :model="items"
+            class="w-full border-none rounded-none"
+            :pt="{
+                panel: (options) => ({
+                    class: [
+                        '!border-none',
+                        '!bg-transparent'
+                    ]
+                }),
+            }"
+        >
+            <template #item="{ item }">
+                <a v-ripple class="flex items-center px-4 py-2 cursor-pointer group rounded hover:bg-white hover:shadow">
+                    <Icon v-if="item.icon" :name="item.icon" />
+                    <span :class="['ml-2', { 'font-semibold': item.items }]">{{ item.label }}</span>
+                </a>
+            </template>
+        </PanelMenu>       
 
     </div>
+
+    <div v-if="isOpenSidebar" class="fixed md:hidden h-svh z-10 top-0 bottom-0 end-0 start-0 backdrop-blur-sm bg-white/30" @click="toggleSidebar"></div>
     
 </template>
 
 <script setup>
+const isOpenSidebar = ref(false);
+const toggleSidebar = () => {
+    isOpenSidebar.value = !isOpenSidebar.value;
+};
 const items = ref([
     {
         label: 'Dashboard',
-        icon: 'pi pi-th-large',
+        icon: 'bi:grid-1x2-fill',
         href:'/dashboard',
     },
     {
         label: 'Siswa',
-        icon: 'pi pi-users',
+        icon: 'bi:people',
         items: [
             {
                 label: 'Data Siswa',
@@ -33,7 +65,7 @@ const items = ref([
     },
     {
         label: 'Unit Sekolah',
-        icon: 'pi pi-building-columns',
+        icon: 'bi:buildings',
         items: [
             {
                 label: 'Tambah Unit',
@@ -51,7 +83,7 @@ const items = ref([
     },
     {
         label: 'Pengaturan',
-        icon: 'pi pi-cog',
+        icon: 'bi:gear',
         items: [
             {
                 label: 'Umum',
@@ -60,69 +92,6 @@ const items = ref([
             {
                 label: 'Jenjang',
                 href:'/setting/jenjang',
-            }
-        ]
-    },
-    {
-        label: 'Siswa',
-        icon: 'pi pi-users',
-        items: [
-            {
-                label: 'Data Siswa',
-                icon: 'pi pi-users',
-                href:'/siswa',
-            },
-            {
-                label: 'Tambah Siswa',
-                icon: 'pi pi-user-plus',
-                href:'/siswa/create',
-            },
-            {
-                label: 'Naik Kelas',
-                icon: 'pi pi-caret-up',
-                href:'/siswa/naikkelas',
-            }
-        ]
-    },
-    {
-        label: 'Siswa',
-        icon: 'pi pi-users',
-        items: [
-            {
-                label: 'Data Siswa',
-                icon: 'pi pi-users',
-                href:'/siswa',
-            },
-            {
-                label: 'Tambah Siswa',
-                icon: 'pi pi-user-plus',
-                href:'/siswa/create',
-            },
-            {
-                label: 'Naik Kelas',
-                icon: 'pi pi-caret-up',
-                href:'/siswa/naikkelas',
-            }
-        ]
-    },
-    {
-        label: 'Siswa',
-        icon: 'pi pi-users',
-        items: [
-            {
-                label: 'Data Siswa',
-                icon: 'pi pi-users',
-                href:'/siswa',
-            },
-            {
-                label: 'Tambah Siswa',
-                icon: 'pi pi-user-plus',
-                href:'/siswa/create',
-            },
-            {
-                label: 'Naik Kelas',
-                icon: 'pi pi-caret-up',
-                href:'/siswa/naikkelas',
             }
         ]
     },
