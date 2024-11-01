@@ -5,9 +5,14 @@
             <label for="email">Email</label>
             <InputText id="email" v-model="form.email" type="text" size="large" class="w-full"/>
         </div>
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="password">Password</label>
             <InputText id="password" v-model="form.password" type="password" size="large" class="w-full"/>
+        </div>
+
+        <div class="flex mb-5">
+            <Checkbox v-model="form.remember" id="remember" name="remember" value="true" />
+            <label for="remember" class="ml-2"> Remember </label>
         </div>
         
         <div v-if="isLoading">

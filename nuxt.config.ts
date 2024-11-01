@@ -40,7 +40,7 @@ export default defineNuxtConfig({
       baseUrl: process.env.BACKEND_URL,
       redirect: {
         onLogin: '/',
-        onLogout: '/'
+        onLogout: '/',
       },
       globalMiddleware: {
           enabled: true,
