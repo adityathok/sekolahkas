@@ -1,8 +1,16 @@
-const { isAuthenticated,logout,login } = useSanctumAuth()
+export const useAuth = () => {   
+    const { isAuthenticated,logout,login } = useSanctumAuth()
 
-export const useAuth = () => {    
     const isLogin = isAuthenticated;
-    const toLogout = logout;
+    
+    const toLogout = async () => {
+        try {
+            logout()
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    }
+
     const toLogin = login;
 
     return {

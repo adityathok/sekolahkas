@@ -4,7 +4,7 @@
       
       <div class="text-slate-900 z-20 bg-white shadow-xl p-10 m-3 w-full md:w-[450px]">                   
 
-          <template v-if="!isAuthenticated">
+          <template v-if="!isLogin">
             <div class="mb-5 pb-3 border-b">
               <h1 class="text-xl font-bold">
                 Login
@@ -13,7 +13,7 @@
             <AuthLoginForm />
           </template>
           
-          <template v-if="isAuthenticated">
+          <template v-if="isLogin">
             <div class="mb-5 pb-3 border-b">
               <h1 class="text-xl text-center font-bold">
                 Anda sudah masuk
@@ -21,7 +21,7 @@
             </div>
             <div class="flex justify-between">
               <Button @click="navigateTo('/dashboard')" label="Dashboard" class="w-full md:w-[48%] md:mb-0 mb-2" outlined/>
-              <Button @click="logout" label="Logout" class="w-full md:w-[48%]" />
+              <Button @click="toLogout" label="Logout" class="w-full md:w-[48%]" />
             </div>
           </template>
 
@@ -37,5 +37,6 @@
   definePageMeta({
     layout: 'blank'
   })
-  const { isAuthenticated,logout } = useSanctumAuth()
+  const { isLogin,toLogout } = useAuth()
+
 </script>

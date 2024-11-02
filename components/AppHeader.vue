@@ -3,13 +3,13 @@
         <Button class="me-2 !bg-transparent !text-slate-600 !border-none" variant="text">
             <Icon name="bi:bell" />
         </Button>
-        <Avatar class="p-overlay-badge" image="https://github.com/adityathok.png?size=200" @click="toggleAvatar" shape="circle" aria-haspopup="true" aria-controls="avatar_menu"/>
+        <Avatar class="p-overlay-badge" image="https://github.com/adityathok.png?size=50" @click="toggleAvatar" shape="circle" aria-haspopup="true" aria-controls="avatar_menu"/>
         <Menu ref="menu" id="avatar_menu" :model="menuAvatar" :popup="true" />
     </div>
 </template>
 
 <script setup>
-const { logout } = useSanctumAuth()
+const { toLogout } = useAuth()
 const menu = ref();
 const toggleAvatar = (event) => {
     menu.value.toggle(event);
@@ -29,7 +29,7 @@ const toggleAvatar = (event) => {
                 { 
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
-                    command: () => logout() 
+                    command: () => toLogout() 
                 }
             ]
         }
