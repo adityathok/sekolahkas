@@ -21,7 +21,7 @@
         </div>
 
         <div class="text-center">
-            <Button type="submit" label="Masuk" class="w-full"/>
+            <Button type="submit" label="Masuk" class="w-full" />
         </div>
 
         <div v-if="errors" class="my-3">

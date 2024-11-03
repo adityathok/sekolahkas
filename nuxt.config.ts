@@ -25,6 +25,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
+  hooks: {
+    'prerender:routes' ({ routes }) {
+      routes.clear() // Do not generate any routes (except the defaults)
+    }
+  },
+  
   postcss: {
     plugins: {
       tailwindcss: {},

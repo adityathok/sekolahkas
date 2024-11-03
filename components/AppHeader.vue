@@ -24,7 +24,7 @@ const toggleAvatar = (event) => {
                 {
                     label: 'Profile',
                     icon: 'pi pi-user',
-                    // command: () => router.visit('/profile') 
+                    command: () => navigateTo('/profile') 
                 },
                 { 
                     label: 'Logout',
