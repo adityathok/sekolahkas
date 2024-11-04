@@ -54,7 +54,7 @@
             console.error('Request failed not because of a validation', error.code);
         } finally {
             isLoading.value = false; 
-            return navigateTo('/dashboard')
+            return navigateTo('/')
         }
     }
 

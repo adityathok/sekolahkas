@@ -21,16 +21,10 @@ const MyPreset = definePreset(Lara, {
 });
 
 export default defineNuxtConfig({
+  ssr: false,
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
-
-  hooks: {
-    'prerender:routes' ({ routes }) {
-      routes.clear() // Do not generate any routes (except the defaults)
-    }
-  },
-  
+  css: ['~/assets/css/main.css'],  
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -41,9 +35,13 @@ export default defineNuxtConfig({
   modules: ['@primevue/nuxt-module', 'nuxt-auth-sanctum', '@nuxt/icon'], 
   sanctum: {
       baseUrl: process.env.BACKEND_URL,
+      redirectIfAuthenticated: true,
+      redirectIfUnauthenticated: true,
       redirect: {
+        keepRequestedRoute: true,
         onLogin: '/',
         onLogout: '/',
+        onGuestOnly:'/dashboard'
       },
       globalMiddleware: {
           enabled: true,

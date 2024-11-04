@@ -5,7 +5,8 @@ export const useAuth = () => {
     
     const toLogout = async () => {
         try {
-            logout()
+            await logout()
+            navigateTo('/login')
         } catch (error) {
             console.error('Logout failed:', error);
         }
