@@ -1,14 +1,8 @@
 <template>
 
-    <div class="md:hidden absolute top-0 left-0 pt-4 px-5">
-        <Button size="small" variant="link" @click="toggleSidebar">
-            <Icon name="bi:list" />
-        </Button>
-    </div>
+    <div class="fixed md:relative overflow-y-auto md:start-0 z-20 top-0 px-2 pb-3 h-svh w-[90%] md:w-[14rem] bg-slate-600 shadow md:shadow-none transition ease-in-out duration-100" :class="{'start-[0%]': useGlobal.opensidebar, 'start-[-100%]': !useGlobal.opensidebar}">
 
-    <div class="fixed md:relative overflow-y-auto md:start-0 z-20 top-0 px-2 pb-3 h-svh w-[90%] md:w-[16rem] md:bg-zinc-100 bg-white shadow md:shadow-none transition ease-in-out duration-500" :class="{'start-0': isOpenSidebar, 'start-[-100%]': !isOpenSidebar}">
-
-        <div class="flex items-center z-10 p-3 min-h-[5rem] mb-2 border-b-2">
+        <div class="flex items-center z-10 p-3 min-h-[5rem] mb-2 border-b border-zinc-500">
             <AppLogo />
         </div>
 
@@ -49,17 +43,12 @@
 
     </div>
 
-    <div v-if="isOpenSidebar" class="fixed md:hidden h-svh z-10 top-0 bottom-0 end-0 start-0 backdrop-blur-sm bg-white/30" @click="toggleSidebar"></div>
+    <div v-if="useGlobal.opensidebar" class="fixed md:hidden h-svh z-10 top-0 bottom-0 end-0 start-0 backdrop-blur-sm bg-white/30" @click="useGlobal.toggelsidebar"></div>
     
 </template>
 
 <script setup>
-
-//sidebar Toggle
-const isOpenSidebar = ref(false);
-const toggleSidebar = () => {
-    isOpenSidebar.value = !isOpenSidebar.value;
-};
+const useGlobal = useGlobalStore()
 
 //route, cek halaman aktif
 const route = useRoute()
@@ -94,7 +83,7 @@ onMounted(() => {
 
 
 //class untuk tombol menu
-const classLink = 'w-full flex items-center justify-between px-4 py-2 cursor-pointer group rounded hover:bg-white hover:shadow';
+const classLink = 'w-full flex items-center justify-between px-4 py-2 cursor-pointer rounded text-white hover:text-slate-900 hover:bg-white hover:shadow';
 
 //daftar menu
 const items = ref([

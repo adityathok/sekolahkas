@@ -1,8 +1,8 @@
 <template>                             
 
     <template v-if="!isLogin">
-        <div class="mb-5 pb-3 border-b">
-            <h1 class="text-xl font-bold">
+        <div class="mb-5 pb-3 text-center border-b">
+            <h1 class="text-2xl font-semibold tracking-tight">
             Register
             </h1>
         </div>

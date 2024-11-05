@@ -30,8 +30,9 @@
             Pendaftaran berhasil..
         </Message>
 
-        <div class="text-center">
-            <Button type="submit" label="Daftar" class="w-full" />
+        <div class="flex justify-between items-center">
+            <Button @click="navigateTo('/login')" type="button" label="Login" class="w-full md:w-52 mb-1 md:mb-0 mr-2" outlined/>
+            <Button type="submit" label="Daftar" class="w-full md:w-52" />
         </div>
 
     </form>

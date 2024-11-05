@@ -1,14 +1,31 @@
 <template>
-    <div class="flex items-center justify-end mb-7">
-        <Button class="me-2 !bg-transparent !text-slate-600 !border-none" variant="text">
-            <Icon name="bi:bell" />
-        </Button>
-        <Avatar class="p-overlay-badge" image="https://github.com/adityathok.png?size=50" @click="toggleAvatar" shape="circle" aria-haspopup="true" aria-controls="avatar_menu"/>
-        <Menu ref="menu" id="avatar_menu" :model="menuAvatar" :popup="true" />
+    <div class="flex items-center justify-between mb-7">
+
+        <div>
+            <div class="md:hidden">
+                <Button @click="useGlobal.toggelsidebar()" severity="secondary" variant="link">
+                    <Icon name="bi:list" />
+                </Button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end">
+            <Button class="me-2 !bg-transparent !text-slate-600 !border-none" variant="text">
+                <Icon name="bi:bell" />
+            </Button>
+            
+            <img @click="toggleAvatar" src="~/assets/img/ava-man.jpg" alt="Avatar user" class="max-h-7 rounded-full">
+            <Menu ref="menu" id="avatar_menu" :model="menuAvatar" :popup="true" />
+
+        </div>
     </div>
+    
 </template>
 
 <script setup>
+
+const useGlobal = useGlobalStore()
+
 const { toLogout } = useAuth()
 const menu = ref();
 const toggleAvatar = (event) => {
