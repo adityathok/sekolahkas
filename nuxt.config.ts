@@ -31,7 +31,6 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-
   modules: ['@primevue/nuxt-module', 'nuxt-auth-sanctum', '@nuxt/icon', '@pinia/nuxt'], 
   sanctum: {
       baseUrl: process.env.BACKEND_URL,
