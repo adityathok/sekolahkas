@@ -1,6 +1,6 @@
 <template>
 
-    <div class="fixed md:relative overflow-y-auto md:start-0 z-20 top-0 px-2 pb-3 h-svh w-[90%] md:w-[14rem] bg-slate-600 shadow md:shadow-none transition ease-in-out duration-100" :class="{'start-[0%]': useGlobal.opensidebar, 'start-[-100%]': !useGlobal.opensidebar}">
+    <div class="fixed md:sticky top-0 overflow-y-auto md:start-0 z-20 px-2 pb-3 h-svh w-[90%] md:w-[14rem] bg-slate-600 shadow md:shadow-none transition ease-in-out duration-100" :class="{'start-[0%]': useGlobal.opensidebar, 'start-[-100%]': !useGlobal.opensidebar}">
 
         <div class="flex items-center z-10 p-3 min-h-[5rem] mb-2 border-b border-zinc-500">
             <AppLogo />
@@ -26,15 +26,15 @@
         >
             <template #item="{ item }">
                 <button v-if="item.items" v-ripple :class="[classLink,{'bg-blue-600 text-white hover:text-slate-500 shadow' : isActive(item.href)}]">
-                    <span>
-                        <Icon v-if="item.icon" :name="item.icon" class="mr-2"/>
+                    <span class="flex justify-start items-center">
+                        <Icon v-if="item.icon" :name="item.icon" :ssr="true" class="mr-2"/>
                         <span>{{ item.label }}</span>
                     </span>
                     <Icon v-if="item.items" name="lucide:chevron-down" />
                 </button>
                 <NuxtLink v-else :to="item.href" :class="[classLink,{'bg-blue-600 text-white hover:text-slate-500 shadow' : isActive(item.href)}]">
-                    <span>
-                        <Icon v-if="item.icon" :name="item.icon"  class="mr-2"/>
+                    <span class="flex justify-start items-center">
+                        <Icon v-if="item.icon" :name="item.icon" :ssr="true" class="mr-2"/>
                         <span :class="{'ml-5':item.key.includes('_')}">{{ item.label }}</span>
                     </span>
                 </NuxtLink>
@@ -88,64 +88,81 @@ const classLink = 'w-full flex items-center justify-between px-4 py-2 cursor-poi
 //daftar menu
 const items = ref([
     {
-        key: '0',
+        key: 'dashboard',
         label: 'Dashboard',
         icon: 'lucide:layout-grid',
         href:'/',
     },
     {
-        key: '1',
+        key: 'siswa',
         label: 'Siswa',
         icon: 'lucide:users',
         items: [
             {
-                key: '1_0',
+                key: 'siswa_data',
                 label: 'Data Siswa',
                 href:'/siswa',
             },
             {
-                key: '1_1',
+                key: 'siswa_tambah',
                 label: 'Tambah Siswa',
                 href:'/siswa/create',
             },
             {
-                key: '1_2',
+                key: 'siswa_naik',
                 label: 'Naik Kelas',
                 href:'/siswa/naikkelas',
             }
         ]
     },
     {
-        key: '2',
+        key: 'unit',
         label: 'Unit Sekolah',
         icon: 'lucide:school',
         items: [
             {
-                key: '2_0',
+                key: 'unit_add',
                 label: 'Tambah Unit',
                 href:'/unitsekolah/create',
             },
             {
-                key: '2_1',
+                key: 'unit_create',
                 label: 'Daftar Unit',
                 href:'/unitsekolah',
             },
             {
-                key: '2_2',
+                key: 'unit_add_2',
                 label: 'Naik Kelas',
                 href:'/siswa/naikkelas',
             }
         ]
     },
     {
-        key: '3',
+        key: 'settings',
         label: 'Pengaturan',
         icon: 'lucide:settings',
         items: [
             {
-                key: '3_0',
+                key: 'settings_0',
                 label: 'Umum',
                 href:'/settings/umum',
+            },
+            {
+                key: 'settings_1',
+                label: 'Jenjang',
+                href:'/settings/jenjang',
+            }
+        ]
+    },
+    {
+        key: 'users',
+        label: 'Users',
+        icon: 'lucide:square-user',
+        items: [
+            {
+                key: 'users_all',
+                label: 'Semua Users',
+                href:'/users',
             },
             {
                 key: '3_1',
