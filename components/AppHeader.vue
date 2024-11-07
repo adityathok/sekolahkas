@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between mb-7">
+    <div class="flex items-center justify-between mb-2">
 
         <div>
             <div class="md:hidden">

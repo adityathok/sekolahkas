@@ -11,29 +11,42 @@
     </PageHeader>
 
     <div v-if="status === 'pending'">
-        <Skeleton width="100%" height="150px"></Skeleton>
+        <Skeleton width="100%" height="calc(100dvh - 300px)"></Skeleton>
     </div>
 
-    <div v-else class="card">
+    <div v-else class="rounded-md border overflow-hidden">
                 
-        <DataTable :value="data.data" tableStyle="min-width: 50rem">
-            <Column field="avatar" header="Avatar">
+        <DataTable :value="data.data" stripedRows scrollable scrollHeight="calc(100dvh - 270px)" tableStyle="min-width: 50rem">
+            <Column field="avatar" header="">
                 <template #body="slotProps">
-                    <img :src="slotProps.data.avatar" alt="Avatar user" class="max-h-7 rounded-full">
+                    <img v-if="slotProps.data.avatar" :src="slotProps.data.avatar" alt="Avatar user" class="max-h-7 rounded-full">
+                    <Avatar v-else :label="firstName(slotProps.data.name)" shape="circle" />
                 </template>
             </Column>
-            <Column field="name" header="Name"></Column>
+            <Column field="name" header="Nama"></Column>
             <Column field="email" header="Email"></Column>
             <Column field="role" header="Role"></Column>
-            <Column field="created_at" header="Registered">
+            <Column field="created_at" header="Terdaftar">
                 <template #body="slotProps">
                     {{ dateIndo(slotProps.data.created_at) }}
                 </template>
             </Column>
+            <Column field="option" header=" ">
+                <template #body="slotProps">
+                    <div class="flex justify-end items-center">
+                        <Button type="button" @click="navigateTo('/users/'+slotProps.data.id)" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
+                            <Icon name="lucide:pencil" />
+                        </Button>
+                        <Button type="button" @click="navigateTo('/users/'+slotProps.data.id)" class="!bg-transparent !border-none !text-red-500" variant="text" size="small">
+                            <Icon name="lucide:trash-2" />
+                        </Button>
+                    </div>
+                </template>
+            </Column>
         </DataTable>
 
-        <div class="mt-4 md:flex md:justify-between md:items-center">
-            <div class="opacity-50 text-sm text-right md:text-left mb-2 md:mb-0">
+        <div class="mt-2 md:flex md:justify-between md:items-center">
+            <div class="opacity-50 text-sm text-right md:text-left mx-3 mb-2 md:mb-0">
                 Tampil {{ data.per_page }} dari {{ data.total }}
             </div>
             <Paginator
@@ -81,5 +94,14 @@
             second: "numeric",
         });
     }
+
+    const firstName = (name: string) => {
+        return Array.from(name)[0];
+    }
+
+    const toOption = (url: string) => {
+        navigateTo(url)
+    };
+
 
 </script>
