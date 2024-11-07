@@ -11,16 +11,12 @@
     </PageHeader>
 
     <div v-if="status === 'pending'">
-        Loading ...
+        <Skeleton width="100%" height="150px"></Skeleton>
     </div>
 
     <div v-else class="card">
-        
-        <ButtonGroup v-if="links" >
-            <Button v-for="link in links" @click="navigateTo(link.url)" :key="link.url" :label="link.label" size="small"/>
-        </ButtonGroup>
-
-        <DataTable :value="users" tableStyle="min-width: 50rem">
+                
+        <DataTable :value="data.data" tableStyle="min-width: 50rem">
             <Column field="avatar" header="Avatar">
                 <template #body="slotProps">
                     <img :src="slotProps.data.avatar" alt="Avatar user" class="max-h-7 rounded-full">
@@ -36,22 +32,44 @@
             </Column>
         </DataTable>
 
+        <div class="mt-4 md:flex md:justify-between md:items-center">
+            <div class="opacity-50 text-sm text-right md:text-left mb-2 md:mb-0">
+                Tampil {{ data.per_page }} dari {{ data.total }}
+            </div>
+            <Paginator
+                :rows="data.per_page"
+                :totalRecords="data.total"
+                @page="onPaginate"
+                :pt="{
+                    root: (event) => {
+                        const itemForPage =  data.per_page;
+                        const currentPage =  page - 1;
+                        event.state.d_first = itemForPage * currentPage;
+                    },
+                }"
+            >
+            </Paginator>
+        </div>
 
     </div>
 
 </template>
 
 <script lang="ts" setup>
-    const route = useRoute()
-    const page = ref()
-
-    onMounted(() => {
-        page.value = route.query.page||1;
-        console.log('/api/users/?page='+page.value)
-    })
+    const route = useRoute();
+    const page = ref(route.query.page ? Number(route.query.page) : 1);
 
     const client = useSanctumClient();
-    const { data: users, status, links } = await client('/api/users/?page='+page.value);
+    const { data, status, error, refresh } = await useAsyncData(
+        'users',
+        () => client('/api/users/?page='+page.value)
+    )
+    
+    const onPaginate = (event: { page: number }) => {
+        page.value = event.page + 1; 
+        refresh()
+        navigateTo('/users?page='+page.value)
+    };
 
     const dateIndo = (date: string) => {
         return new Date(date).toLocaleDateString('id-ID', {
