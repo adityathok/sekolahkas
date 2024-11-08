@@ -1,6 +1,6 @@
 <template>
 
-    <div class="fixed md:sticky top-0 overflow-y-auto md:start-0 z-20 px-2 pb-3 h-svh w-[90%] md:w-[14rem] bg-slate-600 shadow md:shadow-none transition ease-in-out duration-100" :class="{'start-[0%]': useGlobal.opensidebar, 'start-[-100%]': !useGlobal.opensidebar}">
+    <div class="fixed md:sticky top-0 overflow-y-auto md:start-0 z-20 px-2 pb-3 h-svh w-[90%] md:w-[14rem] bg-gradient-to-bl from-slate-900 to-slate-700 shadow md:shadow-none transition ease-in-out duration-100" :class="{'start-[0%]': useGlobal.opensidebar, 'start-[-100%]': !useGlobal.opensidebar}">
 
         <div class="flex items-center z-10 p-3 min-h-[5rem] mb-2 border-b border-zinc-500">
             <AppLogo />

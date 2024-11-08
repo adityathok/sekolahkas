@@ -1,10 +1,15 @@
 <template>
     <div class="flex items-center justify-between mb-2">
 
-        <div>
+        <div class="flex items-center justify-start">
             <div class="md:hidden">
-                <Button @click="useGlobal.toggelsidebar()" severity="secondary" variant="link">
-                    <Icon name="bi:list" />
+                <Button @click="$router.back()" size="small" severity="secondary" variant="link">
+                    <Icon name="lucide:arrow-left" />
+                </Button>
+            </div>
+            <div class="md:hidden ms-1">
+                <Button @click="useGlobal.toggelsidebar()" size="small" severity="secondary" variant="link">
+                    <Icon name="lucide:menu" />
                 </Button>
             </div>
         </div>
@@ -23,8 +28,8 @@
 </template>
 
 <script setup>
-
 const useGlobal = useGlobalStore()
+const useUser = useUserStore()
 
 const { toLogout } = useAuth()
 const menu = ref();
@@ -36,7 +41,7 @@ const toggleAvatar = (event) => {
  const menuAvatar = computed(() => {
     return [
         {
-            label: 'User',
+            label: useUser.currentUser.name,
             items: [
                 {
                     label: 'Profile',

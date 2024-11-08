@@ -10,13 +10,9 @@
         </template>
     </PageHeader>
 
-    <div v-if="status === 'pending'">
-        <Skeleton width="100%" height="calc(100dvh - 300px)"></Skeleton>
-    </div>
-
-    <div v-else class="rounded-md border overflow-hidden">
+    <div class="rounded-md border overflow-hidden">
                 
-        <DataTable :value="data.data" stripedRows scrollable scrollHeight="calc(100dvh - 270px)" tableStyle="min-width: 50rem">
+        <DataTable :value="data.data" stripedRows scrollable scrollHeight="calc(100dvh - 235px)" tableStyle="min-width: 50rem">
             <Column field="avatar" header="">
                 <template #body="slotProps">
                     <img v-if="slotProps.data.avatar" :src="slotProps.data.avatar" alt="Avatar user" class="max-h-7 rounded-full">
@@ -37,7 +33,7 @@
                         <Button type="button" @click="navigateTo('/users/'+slotProps.data.id)" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
                             <Icon name="lucide:pencil" />
                         </Button>
-                        <Button type="button" @click="navigateTo('/users/'+slotProps.data.id)" class="!bg-transparent !border-none !text-red-500" variant="text" size="small">
+                        <Button type="button" @click="toDelete(slotProps.data.id)" class="!bg-transparent !border-none !text-red-500" variant="text" size="small">
                             <Icon name="lucide:trash-2" />
                         </Button>
                     </div>
@@ -46,8 +42,14 @@
         </DataTable>
 
         <div class="mt-2 md:flex md:justify-between md:items-center">
-            <div class="opacity-50 text-sm text-right md:text-left mx-3 mb-2 md:mb-0">
-                Tampil {{ data.per_page }} dari {{ data.total }}
+            <div class="opacity-50 text-sm text-right md:text-left mx-3 mb-2 md:mb-0">                
+                <span v-if="status === 'pending'" class="opacity-50">
+                    Loading....
+                </span>
+                <span v-else>
+                    Tampil {{ data.per_page }} dari {{ data.total }}
+                </span>
+
             </div>
             <Paginator
                 :rows="data.per_page"
@@ -66,9 +68,12 @@
 
     </div>
 
+    <Toast />
+
 </template>
 
 <script lang="ts" setup>
+    const toast = useToast();
     const route = useRoute();
     const page = ref(route.query.page ? Number(route.query.page) : 1);
 
@@ -103,5 +108,10 @@
         navigateTo(url)
     };
 
+    const toDelete = async (id: string) => {
+        await client('/api/users/'+id, { method: 'DELETE' })   
+        refresh()
+        toast.add({ severity: 'success', summary: 'Berhasil', detail: 'Berhasil dihapus', life: 3000 });
+    };
 
 </script>
