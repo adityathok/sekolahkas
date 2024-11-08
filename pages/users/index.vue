@@ -30,10 +30,10 @@
             <Column field="option" header=" ">
                 <template #body="slotProps">
                     <div class="flex justify-end items-center">
-                        <Button type="button" @click="navigateTo('/users/'+slotProps.data.id)" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
+                        <NuxtLink :to="'/users/'+slotProps.data.id" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
                             <Icon name="lucide:pencil" />
-                        </Button>
-                        <Button type="button" @click="toDelete(slotProps.data.id)" class="!bg-transparent !border-none !text-red-500" variant="text" size="small">
+                        </NuxtLink>
+                        <Button v-if="useUser.currentUser.id!==slotProps.data.id" type="button" @click="confirmDelete(slotProps.data.id)" class="!bg-transparent !border-none !text-red-500" variant="text" size="small">
                             <Icon name="lucide:trash-2" />
                         </Button>
                     </div>
@@ -69,10 +69,13 @@
     </div>
 
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
 
 </template>
 
 <script lang="ts" setup>
+    const useUser = useUserStore()
+    const confirm = useConfirm();
     const toast = useToast();
     const route = useRoute();
     const page = ref(route.query.page ? Number(route.query.page) : 1);
@@ -112,6 +115,29 @@
         await client('/api/users/'+id, { method: 'DELETE' })   
         refresh()
         toast.add({ severity: 'success', summary: 'Berhasil', detail: 'Berhasil dihapus', life: 3000 });
+    };
+
+    const confirmDelete = (id: string) => {
+        confirm.require({
+            message: 'Yakin untuk menghapus user ini ?',
+            header: 'Hapus User',
+            icon: 'pi pi-info-circle',
+            rejectLabel: 'Cancel',
+            rejectProps: {
+                label: 'Cancel',
+                severity: 'secondary',
+                outlined: true
+            },
+            acceptProps: {
+                label: 'Delete',
+                severity: 'danger'
+            },
+            accept: async () => {
+                await client('/api/users/'+id, { method: 'DELETE' })   
+                refresh()
+                toast.add({ severity: 'success', summary: 'Berhasil', detail: 'Berhasil dihapus', life: 3000 });
+            },
+        });
     };
 
 </script>
