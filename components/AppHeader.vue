@@ -46,7 +46,7 @@ const toggleAvatar = (event) => {
                 {
                     label: 'Profile',
                     icon: 'pi pi-user',
-                    command: () => navigateTo('/profile') 
+                    command: () => navigateTo('/users/edit?id='+useUser.currentUser.id) 
                 },
                 { 
                     label: 'Logout',
