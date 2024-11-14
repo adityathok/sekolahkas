@@ -161,13 +161,13 @@ const items = ref([
         items: [
             {
                 key: 'users_all',
-                label: 'Semua Users',
+                label: 'Semua User',
                 href:'/users',
             },
             {
                 key: '3_1',
-                label: 'Jenjang',
-                href:'/settings/jenjang',
+                label: 'Tambah User',
+                href:'/users/create',
             }
         ]
     },

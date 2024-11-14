@@ -3,7 +3,7 @@
     <Card class="border max-w-2xl mx-auto">
 
         <template #title>
-            Edit Profil
+            Edit User
         </template>
         <template #subtitle>
             Ubah profil {{ data.name }}
@@ -58,6 +58,10 @@
     const idUser = route.query.id || '';
     const client = useSanctumClient();
     const eror = ref({})
+
+    if(!idUser){
+       await navigateTo('/users')
+    }
 
     const { data, status, error, refresh } = await useAsyncData(
         'users'+idUser,

@@ -37,17 +37,17 @@
     const isLoading = ref(false)
     const errors = ref(false)
 
-    const form = reactive({
+    const form = ref({
         email: '',
         password: '',
-        remember: false,
+        remember: '',
     })
 
     async function handleFormSubmit() {
         isLoading.value = true; 
         errors.value = false; 
         try {
-            await login(form)
+            await login(form.value)
         } catch (e) {
             const error = useSanctumError(e);
             errors.value = true; 

@@ -13,9 +13,14 @@ export const useSanctumError = (error: any) => {
         ? error.response?._data.errors
         : {};
 
+    const msg: Record<string, string[]> = isValidationError
+        ? error.response?._data.message
+        : {};
+
     return {
         isValidationError,
         code,
         bag,
+        msg
     };
 };
