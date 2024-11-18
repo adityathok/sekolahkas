@@ -1,9 +1,18 @@
 export const useUserStore = defineStore('user', () => {  
     
-    const { isAuthenticated, user } = useSanctumAuth()
+    const { isAuthenticated, user, refreshIdentity } = useSanctumAuth()
 
     const isLogin = isAuthenticated;
-    const currentUser = user
+    const currentUser = ref(user)
+
+    const refreshUser = async () => {
+        await refreshIdentity()
+        currentUser.value = user
+    }
   
-    return { isLogin, currentUser }
+    return { 
+        isLogin, 
+        currentUser,
+        refreshUser
+    }
 })

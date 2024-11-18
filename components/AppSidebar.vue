@@ -121,14 +121,14 @@ const items = ref([
         icon: 'lucide:school',
         items: [
             {
-                key: 'unit_add',
-                label: 'Tambah Unit',
-                href:'/unitsekolah/create',
-            },
-            {
                 key: 'unit_create',
                 label: 'Daftar Unit',
                 href:'/unitsekolah',
+            },
+            {
+                key: 'unit_add',
+                label: 'Tambah Unit',
+                href:'/unitsekolah/create',
             },
             {
                 key: 'unit_add_2',

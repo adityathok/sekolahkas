@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts" setup>
+    const { currentUser,refreshUser } = useUserStore()
     const { urlStorage } = useGlobalStore()
     const route = useRoute()
     const toast = useToast();
@@ -97,6 +98,10 @@
             refresh()
             toast.add({ severity: 'success', summary: 'Berhasil', detail: 'Berhasil diperbarui', life: 3000 });
             eror.value = ({});
+            //jika id sama dengan id user yang sedang login
+            if(idUser == currentUser.id){
+                await refreshUser()
+            }
         } catch (er) {
             const e = useSanctumError(er);
             eror.value = e.bag;

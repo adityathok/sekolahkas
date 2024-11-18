@@ -19,7 +19,7 @@
                 <Icon name="bi:bell" />
             </Button>
             
-            <img @click="toggleAvatar" src="~/assets/img/ava-man.jpg" alt="Avatar user" class="max-h-7 rounded-full">
+            <Avatar :image="avatar" shape="circle" class="object-cover" @click="toggleAvatar" />
             <Menu ref="menu" id="avatar_menu" :model="menuAvatar" :popup="true" />
 
         </div>
@@ -32,6 +32,7 @@ const useGlobal = useGlobalStore()
 const useUser = useUserStore()
 
 const { toLogout } = useAuth()
+const avatar = useUser.currentUser.avatar ? useGlobal.urlStorage+useUser.currentUser.avatar : '~/assets/img/ava-man.jpg';
 const menu = ref();
 const toggleAvatar = (event) => {
     menu.value.toggle(event);
