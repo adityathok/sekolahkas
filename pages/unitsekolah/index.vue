@@ -17,11 +17,11 @@
           </span>
         </template>
       </Column>
-      <Column field="jenjang" header="Jenjang"></Column>
-      <Column field="kepala_sekolah" header="Kepala Sekolah"></Column>
-      <Column field="telepon" header="Telepon"></Column>
-      <Column field="whatsapp" header="Whatsapp"></Column>
-      <Column field="email" header="Email"></Column>
+      <Column field="jenjang" header="Jenjang" class="hidden md:table-cell"></Column>
+      <Column field="kepala_sekolah" header="Kepala Sekolah" class="hidden xl:table-cell"></Column>
+      <Column field="telepon" header="Telepon" class="hidden md:table-cell"></Column>
+      <Column field="whatsapp" header="Whatsapp"  class="hidden sm:table-cell"></Column>
+      <Column field="email" header="Email" class="hidden xl:table-cell"></Column>
       <Column field="option">
           <template #body="slotProps">
               <div class="flex justify-end items-center">
