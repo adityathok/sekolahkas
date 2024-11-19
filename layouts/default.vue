@@ -1,6 +1,6 @@
 <template>
   
-    <div class="relative h-full md:flex min-h-svh w-full">
+    <div class="relative h-full md:flex min-h-svh w-full bg-gray-100">
 
             <AppSidebar />
 

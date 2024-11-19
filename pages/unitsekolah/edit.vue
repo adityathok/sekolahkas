@@ -9,44 +9,20 @@
       <template #content>
 
           <form @submit.prevent="handleFormSubmit">
-              <div class="mb-3">
-                  <label for="nama">Nama</label>
-                  <InputText id="nama" v-model="form.nama" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="jenjang">Jenjang</label>
-                  <InputText id="jenjang" v-model="form.jenjang" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="kepala_sekolah">Kepala Sekolah</label>
-                  <InputText id="kepala_sekolah" v-model="form.kepala_sekolah" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="telepon">Telepon</label>
-                  <InputText id="telepon" v-model="form.telepon" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="whatsapp">Whatsapp</label>
-                  <InputText id="whatsapp" v-model="form.whatsapp" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="email">Email</label>
-                  <InputText id="email" v-model="form.email" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="mb-3">
-                  <label for="alamat">Alamat</label>
-                  <InputText id="alamat" v-model="form.alamat" type="text" size="large" class="w-full"/>
-              </div>
-              <div class="text-end">
-                  <Button type="submit" label="Update"/>
-              </div>
 
-              <div v-for="(field, index) in formFields" class="mb-3">
+            <div v-for="(field, index) in formFields" :key="field.id" class="mb-3">
                 <label :for="field.id">{{ field.label }}</label>
                 
                 <InputText v-if="field.type == 'text'" :id="field.id" v-model="form[field.id]" type="text" size="large" class="w-full"/>
 
-              </div>
+                <img v-if="field.type == 'file'" :src="form[field.id]" alt="" class="rounded mb-2">
+                <InputText v-if="field.type == 'file'" @change="handleFileUpload" type="file" :id="field.id" class="w-full"/>
+
+            </div>
+            
+            <div class="text-end">
+                <Button type="submit" label="Update"/>
+            </div>
 
           </form>
 
@@ -69,36 +45,50 @@
         () => client('/api/unitsekolah/'+idUnit)
     )
 
-    const formFields = ref([
-      {
-        id: 'nama',
-        label: 'Nama',
-        type: 'text',
-      },
-      {
-        id: 'jenjang',
-        label: 'Jenjang',
-        type: 'text',
-      },
-      {
-        id: 'jenjang',
-        label: 'Jenjang',
-        type: 'text',
-      }
-    ])
+    const formFields = [
+      {id: 'nama',label: 'Nama',type: 'text'},
+      {id: 'jenjang',label: 'Jenjang',type: 'text'},
+      {id: 'alamat',label: 'Alamat',type: 'text'},
+      {id: 'desa',label: 'Desa',type: 'text'},
+      {id: 'kecamatan',label: 'Kecamatan',type: 'text'},
+      {id: 'kota',label: 'Kota',type: 'text'},
+      {id: 'provinsi',label: 'Provinsi',type: 'text'},
+      {id: 'kode_pos',label: 'Kode Pos',type: 'text'},
+      {id: 'status',label: 'Status',type: 'text'},
+      {id: 'tanggal_berdiri',label: 'Tanggal Berdiri',type: 'text'},
+      {id: 'kepala_sekolah',label: 'Kepala Sekolah',type: 'text'},
+      {id: 'whatsapp',label: 'Whatsapp',type: 'text'},
+      {id: 'telepon',label: 'Telepon',type: 'text'},
+      {id: 'email',label: 'Email',type: 'text'},
+      {id: 'logo',label: 'Logo',type: 'file'},
+    ]
 
-    const form = ref({
-        nama: data.value.nama,
-        jenjang: data.value.jenjang,
-        kepala_sekolah: data.value.kepala_sekolah,
-        telepon: data.value.telepon,
-        whatsapp: data.value.whatsapp,
-        email: data.value.email,
-        alamat: data.value.alamat,
-    })
+    const form = ref<Record<string, any>>({
+        ...data.value,
+    });
+
+    function handleFileUpload(event: any) {
+        var id = event.target.id
+        form.value[id] = URL.createObjectURL(event.target.files[0])
+    }
 
     const handleFormSubmit = async () => {
-      
+        const formData = new FormData();
+        for (const key in form.value) {
+            formData.append(key, form.value[key]);
+        }
+        console.log(formData);
+
+        try {
+            await client('/api/unitsekolah/'+data.value.id, {
+                method: 'PUT',
+                body: formData
+            })
+        } catch (er) {
+            const e = useSanctumError(er);
+            console.log(e.bag);
+        }
+
     }
 
 

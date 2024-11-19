@@ -1,63 +1,70 @@
 <template>
 
-  <PageHeader>
+  <Card>
       <template #title>
           Unit Sekolah
       </template>
-  </PageHeader>
+    <template #content>
+
+      <DataTable :value="data.data" stripedRows scrollable scrollHeight="100dvh" tableStyle="min-width: 50rem">
+
+        <Column field="nama" header="Nama">
+          <template #body="slotProps">
+            <span @click="dialogUnit(slotProps.data.id)" class="cursor-pointer">
+              {{ slotProps.data.nama }}
+            </span>
+          </template>
+        </Column>
+        <Column field="jenjang" header="Jenjang" class="hidden md:table-cell"></Column>
+        <Column field="kepala_sekolah" header="Kepala Sekolah" class="hidden xl:table-cell"></Column>
+        <Column field="telepon" header="Telepon" class="hidden md:table-cell"></Column>
+        <Column field="whatsapp" header="Whatsapp"  class="hidden sm:table-cell"></Column>
+        <Column field="email" header="Email" class="hidden xl:table-cell"></Column>
+        <Column field="option">
+            <template #body="slotProps">
+                <div class="flex justify-end items-center">
+                    <NuxtLink :to="'/unitsekolah/edit?id='+slotProps.data.id" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
+                      <Icon name="lucide:pencil" />
+                    </NuxtLink>
+                </div>
+            </template>
+        </Column>
+
+      </DataTable>
+
+      <div class="mt-2 md:flex md:justify-between md:items-center">
+          <div class="opacity-50 text-sm text-right md:text-left mx-3 mb-2 md:mb-0">                
+              <span v-if="status === 'pending'" class="opacity-50">
+                  Loading....
+              </span>
+              <span v-else>
+                  Tampil {{ data.per_page }} dari {{ data.total }}
+              </span>
+
+          </div>
+          <Paginator
+              :rows="data.per_page"
+              :totalRecords="data.total"
+              @page="onPaginate"
+              :pt="{
+                  root: (event) => {
+                      const itemForPage =  data.per_page;
+                      const currentPage =  page - 1;
+                      event.state.d_first = itemForPage * currentPage;
+                  },
+              }"
+          >
+          </Paginator>
+      </div>
+
+    </template>
+  </Card>
 
   <div class="rounded-md border overflow-hidden">
 
-    <DataTable :value="data.data" stripedRows scrollable scrollHeight="100dvh" tableStyle="min-width: 50rem">
+    
 
-      <Column field="nama" header="Nama">
-        <template #body="slotProps">
-          <span @click="dialogUnit(slotProps.data.id)" class="cursor-pointer">
-            {{ slotProps.data.nama }}
-          </span>
-        </template>
-      </Column>
-      <Column field="jenjang" header="Jenjang" class="hidden md:table-cell"></Column>
-      <Column field="kepala_sekolah" header="Kepala Sekolah" class="hidden xl:table-cell"></Column>
-      <Column field="telepon" header="Telepon" class="hidden md:table-cell"></Column>
-      <Column field="whatsapp" header="Whatsapp"  class="hidden sm:table-cell"></Column>
-      <Column field="email" header="Email" class="hidden xl:table-cell"></Column>
-      <Column field="option">
-          <template #body="slotProps">
-              <div class="flex justify-end items-center">
-                  <NuxtLink :to="'/unitsekolah/edit?id='+slotProps.data.id" class="!bg-transparent !border-none !text-slate-800" variant="text" size="small">
-                    <Icon name="lucide:pencil" />
-                  </NuxtLink>
-              </div>
-          </template>
-      </Column>
 
-    </DataTable>
-
-    <div class="mt-2 md:flex md:justify-between md:items-center">
-            <div class="opacity-50 text-sm text-right md:text-left mx-3 mb-2 md:mb-0">                
-                <span v-if="status === 'pending'" class="opacity-50">
-                    Loading....
-                </span>
-                <span v-else>
-                    Tampil {{ data.per_page }} dari {{ data.total }}
-                </span>
-
-            </div>
-            <Paginator
-                :rows="data.per_page"
-                :totalRecords="data.total"
-                @page="onPaginate"
-                :pt="{
-                    root: (event) => {
-                        const itemForPage =  data.per_page;
-                        const currentPage =  page - 1;
-                        event.state.d_first = itemForPage * currentPage;
-                    },
-                }"
-            >
-            </Paginator>
-        </div>
     
   </div>
 
